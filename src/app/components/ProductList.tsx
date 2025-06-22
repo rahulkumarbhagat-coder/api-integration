@@ -1,15 +1,21 @@
 "use client";
 import { useEffect, useState } from "react";
-import { fetchCategories, fetchProducts } from "../lib/api";
+import { fetchCategories, fetchProducts, fetchProductsByCategory } from "../lib/api";
 import ProductCard from "./ProductCard";
 import { Product } from "../types/product";
+
+type Categories = {
+    "slug": string,
+    "name": string,
+    "url": string
+}
 
 export default function ProductList() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [category, setCategory] = useState("");
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState<Categories[]>([]);
   const [sort, setSort] = useState("");
   const [page, setPage] = useState(1);
 
@@ -19,7 +25,7 @@ export default function ProductList() {
       try {
         const skip = (page - 1) * 10;
         const data = category ?
-          await fetch(`/api/category?name=${category}&skip=${skip}`).then(res => res.json()) :
+          await fetchProductsByCategory(10, skip, category):
           await fetchProducts(10, skip);
 
         let sorted = [...data.products];
@@ -40,8 +46,7 @@ export default function ProductList() {
 
   useEffect(() => {
     fetchCategories().then(res => {
-        const response = res.json()
-        setCategories(response)
+        setCategories(res)
     });
   }, []);
 
@@ -52,7 +57,7 @@ export default function ProductList() {
         <select onChange={e => setCategory(e.target.value)} className="border p-2">
           <option value="">All Categories</option>
           {categories.map((cat, i) => (
-            <option key={i} value={cat}>{cat}</option>
+            <option key={cat.slug} value={cat.slug}>{cat.name}</option>
           ))}
         </select>
         <select onChange={e => setSort(e.target.value)} className="border p-2">
