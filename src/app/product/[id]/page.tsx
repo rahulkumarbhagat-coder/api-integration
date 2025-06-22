@@ -8,27 +8,46 @@ export default async function ProductPage({ params }: {params: Promise<{id: stri
   if (!product) return notFound();
 
   return (
-    <div className="min-h-screen bg-[#0a0f1a] text-white p-6 font-audiowide">
-      <h1 className="text-3xl font-semibold mb-6 text-cyan-400">{product.title}</h1>
-      <div className="flex flex-col md:flex-row gap-8 items-start">
-        <div className="w-full md:w-1/2">
+    <main className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-white">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div className="relative w-full aspect-[4/3] md:aspect-square rounded-lg overflow-hidden border">
           <Image
             src={product.thumbnail}
             alt={product.title}
-            width={600}
-            height={400}
-            className="w-full h-auto rounded-xl shadow-[0_0_40px_#00ffe0aa]"
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="object-cover"
           />
         </div>
-        <div className="w-full md:w-1/2 space-y-4">
-          <p className="text-lg text-gray-300">{product.description}</p>
-          <p><strong className="text-pink-500">Brand:</strong> {product.brand}</p>
-          <p><strong className="text-pink-500">Category:</strong> {product.category}</p>
-          <p><strong className="text-pink-500">Rating:</strong> {product.rating}</p>
-          <p><strong className="text-pink-500">Stock:</strong> {product.stock}</p>
-          <p className="text-2xl font-bold text-cyan-400">${product.price}</p>
+
+        <div className="space-y-6">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900 mb-1">{product.title}</h1>
+            <p className="text-sm text-gray-500">by {product.brand} | Category: {product.category}</p>
+          </div>
+
+          <p className="text-gray-700 text-base leading-relaxed">{product.description}</p>
+
+          <div className="flex items-center gap-4 text-lg font-semibold">
+            <span className="text-blue-600">₹{product.price}</span>
+            <span className="text-sm text-gray-500">⭐ {product.rating} rating</span>
+            <span className="text-sm text-green-600">In Stock: {product.stock}</span>
+          </div>
+
+          <div className="grid grid-cols-3 gap-3 pt-4">
+            {product.images.map((img: string, i: number) => (
+              <div key={i} className="relative aspect-square border rounded-md overflow-hidden">
+                <Image
+                  src={img}
+                  alt={`image ${i}`}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

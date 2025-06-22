@@ -53,7 +53,7 @@ export default function ProductList() {
     });
   }, []);
 
-  const handleCardClick = (id: number) => {
+  const handleCardClick = () => {
     setClicked(true);
   };
 
@@ -95,7 +95,7 @@ export default function ProductList() {
       ) : (
         <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
           {products.map((product) => (
-            <div key={product.id} onClick={() => handleCardClick(product.id)} className="cursor-pointer">
+            <div key={product.id} onClick={() => handleCardClick()} className="cursor-pointer">
               <ProductCard product={product} />
             </div>
           ))}

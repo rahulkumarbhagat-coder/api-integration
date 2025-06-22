@@ -1,7 +1,8 @@
 import { Metadata } from "next";
 import "./globals.css";
-import { Audiowide } from "next/font/google";
-const audiowide = Audiowide({ subsets: ["latin"], weight: "400" });
+import { Inter } from "next/font/google";
+
+const inter = Inter({ subsets: ["latin"] });
 
 
 export const metadata : Metadata = {
@@ -18,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${audiowide.className} bg-[#0a0f1a] text-white`}>
+      <body className={`${inter.className} bg-[#f5f5f5] text-gray-900`}>
         {children}
       </body>
     </html>
