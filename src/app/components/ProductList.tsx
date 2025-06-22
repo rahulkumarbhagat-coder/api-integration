@@ -28,7 +28,7 @@ export default function ProductList() {
           await fetchProductsByCategory(10, skip, category):
           await fetchProducts(10, skip);
 
-        let sorted = [...data.products];
+        const sorted = [...data.products];
         if (sort === "price-asc") sorted.sort((a, b) => a.price - b.price);
         if (sort === "price-desc") sorted.sort((a, b) => b.price - a.price);
         if (sort === "title-asc") sorted.sort((a, b) => a.title.localeCompare(b.title));
@@ -38,6 +38,7 @@ export default function ProductList() {
         setError("");
       } catch (e) {
         setError("Failed to load products.");
+        console.log(e);
       }
       setLoading(false);
     };
@@ -56,7 +57,7 @@ export default function ProductList() {
       <div className="flex gap-4 mb-4">
         <select onChange={e => setCategory(e.target.value)} className="border p-2">
           <option value="">All Categories</option>
-          {categories.map((cat, i) => (
+          {categories.map((cat) => (
             <option key={cat.slug} value={cat.slug}>{cat.name}</option>
           ))}
         </select>

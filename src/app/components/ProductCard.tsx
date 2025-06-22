@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Product } from "../types/product";
 
-export default function ProductCard({ product }: { product: any }) {
+export default function ProductCard({ product }: { product:  Product}) {
   return (
     <Link href={`/product/${product.id}`}>
       <div className="border rounded p-4 hover:shadow">

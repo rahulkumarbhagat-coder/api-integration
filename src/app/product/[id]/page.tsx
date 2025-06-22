@@ -2,8 +2,9 @@ import { fetchProductById } from "@/app/lib/api";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
-export default async function ProductPage({ params }: { params: { id: string } }) {
-  const product = await fetchProductById(Number(params.id));
+export default async function ProductPage({ params }: {params: Promise<{id: string}>}) {
+  const { id } = await params
+  const product = await fetchProductById(Number(id));
   if (!product) return notFound();
 
   return (
